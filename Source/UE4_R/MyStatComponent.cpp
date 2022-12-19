@@ -46,17 +46,27 @@ void UMyStatComponent::SetLevel(int32 NewLevel)
 		{
 			Level = StatData->Level;
 			Attack = StatData->Attack;
-			HP = StatData->MaxHp;
+			SetHP(StatData->MaxHp);
+			MaxHP = StatData->MaxHp;
 		}
 	}
 }
 
+void UMyStatComponent::SetHP(int32 NewHP)
+{
+	HP = NewHP;
+
+	if (HP < 0) HP = 0;
+
+	// Linstener Pattern
+	OnHPChanged.Broadcast();
+}
+
 void UMyStatComponent::OnAttacked(float DamageAmount)
 {
-	HP -= DamageAmount;
+	int32 NewHP = HP - DamageAmount;
+	SetHP(NewHP);
 	
-	if (HP < 0) HP = 0;
-	
-	UE_LOG(LogTemp, Warning, TEXT("OnAttacked %d"), HP);
+	// UE_LOG(LogTemp, Warning, TEXT("OnAttacked %d"), HP);
 }
 

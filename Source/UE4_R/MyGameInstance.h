@@ -22,7 +22,6 @@ struct FMyCharacterData : public FTableRowBase
 	int32 MaxHp;
 };
 
-
 /**
  * 
  */

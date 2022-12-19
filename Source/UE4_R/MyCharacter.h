@@ -63,6 +63,9 @@ private:
 	UPROPERTY(VisibleAnywhere)
 	class UMyStatComponent* StatComp;
 
+	UPROPERTY(VisibleAnywhere)
+	class UWidgetComponent* HpBar;
+
 public:
 	UPROPERTY(VisibleAnywhere, Category = "Pawn")
 		float UpDownValue = 0.f;
