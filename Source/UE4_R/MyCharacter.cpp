@@ -9,6 +9,7 @@
 #include "MyStatComponent.h"
 #include "Components/WidgetComponent.h"
 #include "MyCharacterWidget.h"
+#include "MyAIController.h"
 
 // Sets default values
 AMyCharacter::AMyCharacter()
@@ -49,6 +50,9 @@ AMyCharacter::AMyCharacter()
 		HpBar->SetDrawSize(FVector2D(200.f, 50.f));
 	}
 
+	// AI
+	AIControllerClass = AMyAIController::StaticClass();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
 }
 
 // Called when the game starts or when spawned
@@ -59,16 +63,6 @@ void AMyCharacter::BeginPlay()
 	FName WeaponSocket(TEXT("hand_l_Socket"));
 
 	auto CurrentWeapon = GetWorld()->SpawnActor<AMyWeapon>(FVector(0.f, 0.f, 100.f), FRotator::ZeroRotator);
-
-	if (CurrentWeapon)
-	{
-		/*CurrentWeapon->AttachToComponent
-		(
-			GetMesh(),
-			FAttachmentTransformRules::SnapToTargetNotIncludingScale,
-			WeaponSocket
-		);*/
-	}
 }
 
 void AMyCharacter::PostInitializeComponents()
