@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "MyCharacter.generated.h"
 
+DECLARE_MULTICAST_DELEGATE(FOnAttackEnd)
+
 UCLASS()
 class UE4_R_API AMyCharacter : public ACharacter
 {
@@ -29,6 +31,8 @@ public:
 
 	void Attack();
 	void AttackCheck();
+
+	FOnAttackEnd OnAttackEnd;
 
 	void UpDown(float Value);
 	void LeftRight(float Value);

@@ -147,7 +147,12 @@ void AMyCharacter::AttackCheck()
 	else
 		DrawColor = FColor::Red;
 
-	DrawDebugCapsule(GetWorld(), Center, HalfHeight, AttackRadius, Rotation, DrawColor, false, 2.f);
+	DrawDebugCapsule
+	(
+		GetWorld(),
+		Center, HalfHeight, AttackRadius, 
+		Rotation, DrawColor, false, 2.f
+	);
 
 	if (bResult && HitResult.Actor.IsValid())
 	{
@@ -157,6 +162,14 @@ void AMyCharacter::AttackCheck()
 		FDamageEvent FDamage;
 		HitResult.Actor->TakeDamage(StatComp->GetAttack(), FDamage, GetController(), this);
 	}
+}
+
+void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	IsAttacking = false;
+
+	// BTTask_Attack에서 공격이 끝났다라는 것을 받기 위한 delegate
+	OnAttackEnd.Broadcast();
 }
 
 void AMyCharacter::UpDown(float Value)
@@ -174,11 +187,6 @@ void AMyCharacter::LeftRight(float Value)
 void AMyCharacter::Yaw(float Value)
 {
 	AddControllerYawInput(Value);
-}
-
-void AMyCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
-{
-	IsAttacking = false;
 }
 
 float AMyCharacter::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)

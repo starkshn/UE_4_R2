@@ -27,7 +27,7 @@ private:
 	FTimerHandle TimerHandle;
 
 	UPROPERTY()
-	class UBehaviorTree* BeHaviorTree;
+	class UBehaviorTree* BehaviorTree;
 
 	UPROPERTY()
 	class UBlackboardData* BlackBoardData;

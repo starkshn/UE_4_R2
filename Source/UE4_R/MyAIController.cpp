@@ -13,7 +13,7 @@ AMyAIController::AMyAIController()
 	static ConstructorHelpers::FObjectFinder<UBehaviorTree> BT(TEXT("BehaviorTree'/Game/AI/BT_MyCharacter.BT_MyCharacter'"));
 	if (BT.Succeeded())
 	{
-		BeHaviorTree = BT.Object;
+		BehaviorTree = BT.Object;
 	}
 
 	static ConstructorHelpers::FObjectFinder<UBlackboardData> BD (TEXT("BlackboardData'/Game/AI/BB_MyCharacter.BB_MyCharacter'"));
@@ -28,14 +28,22 @@ void AMyAIController::OnPossess(APawn* InPawn)
 	Super::OnPossess(InPawn);
 
 	// 나중에 삭제할 부분임. 그냥 3초마다 한번씩 호출해줌.
-	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove, 3.f, true);
+	// GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AMyAIController::RandomMove, 3.f, true);
+
+	if (UseBlackboard(BlackBoardData, Blackboard))
+	{
+		if (RunBehaviorTree(BehaviorTree))
+		{
+			// TODO
+		}
+	}
 }
 
 void AMyAIController::OnUnPossess()
 {
 	Super::OnUnPossess();
 
-	GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+	// GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
 }
 
 void AMyAIController::RandomMove()
